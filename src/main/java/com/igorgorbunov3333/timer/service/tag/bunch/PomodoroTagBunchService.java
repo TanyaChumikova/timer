@@ -24,6 +24,10 @@ public class PomodoroTagBunchService {
     }
 
     public void saveBunch(Set<String> tags) {
+        if (CollectionUtils.isEmpty(tags)) {
+            return;
+        }
+
         List<PomodoroTag> pomodoroTags = pomodoroTagRepository.findByNameIn(tags);
         List<PomodoroTagBunch> allBunches = pomodoroTagBunchRepository.findAll();
 
@@ -35,7 +39,6 @@ public class PomodoroTagBunchService {
 
         if (!CollectionUtils.isEmpty(pomodoroTags)) {
             PomodoroTagBunch bunch = new PomodoroTagBunch(null, pomodoroTags);
-
             pomodoroTagBunchRepository.save(bunch);
         }
     }
